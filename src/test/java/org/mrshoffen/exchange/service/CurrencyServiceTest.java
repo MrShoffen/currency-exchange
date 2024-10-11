@@ -1,5 +1,6 @@
 package org.mrshoffen.exchange.service;
 
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
+import org.mrshoffen.exchange.utils.DependencyManager;
 
 import java.util.List;
 
@@ -16,7 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class CurrencyServiceTest {
-    private final CurrencyService currencyService = CurrencyService.getInstance();
+
+
+    private final CurrencyService currencyService = DependencyManager.getInjector().getInstance(CurrencyService.class);
 
     private static CurrencyRequestDto USD_find_request;
     private static CurrencyResponseDto USD_expected_response;

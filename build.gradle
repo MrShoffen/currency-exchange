@@ -29,6 +29,7 @@ dependencies {
 
     //DI
     implementation 'com.google.inject:guice:7.0.0'
+    testImplementation 'com.google.inject:guice:7.0.0'
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.18.0'
     compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'

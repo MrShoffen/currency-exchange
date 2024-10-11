@@ -1,5 +1,8 @@
 package org.mrshoffen.exchange.servlet;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +17,15 @@ import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 
 @WebServlet(value = "/currencies", name = "Currencies")
 public class CurrenciesServlet extends AbstractBaseHttpServlet {
-    private final CurrencyService currencyService = CurrencyService.getInstance();
+
+    @Inject
+    private CurrencyService currencyService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        currencyService = injector.getInstance(CurrencyService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

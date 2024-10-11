@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class CurrencyDaoImpl implements CurrencyDao {
     private static final CurrencyDao INSTANCE = new CurrencyDaoImpl();
 

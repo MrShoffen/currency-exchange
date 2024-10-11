@@ -1,6 +1,7 @@
 package org.mrshoffen.exchange.service;
 
 
+import jakarta.inject.Inject;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mrshoffen.exchange.dao.CurrencyDao;
@@ -19,16 +20,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class CurrencyService {
-    private static final CurrencyService INSTANCE = new CurrencyService();
 
-    private final CurrencyDao currencyDao = CurrencyDaoImpl.getInstance();
+    @Inject
+    private CurrencyDao currencyDao;
 
+//    @Inject
+//    public CurrencyService(CurrencyDao currencyDao) {
+//        this.currencyDao = currencyDao;
+//    }
 
-    public static CurrencyService getInstance() {
-        return INSTANCE;
-    }
 
     public List<CurrencyResponseDto> findAll() {
         List<Currency> allCurrencies = currencyDao.findAll();
