@@ -1,0 +1,67 @@
+### Get all currencies - 200 OK
+GET http://localhost:8080/currency-exchange/currencies
+Accept: application/json
+
+### Get currency by code - 200 OK
+GET http://localhost:8080/currency-exchange/currency/USD
+Accept: application/json
+
+### Get currency by code - 200 OK
+GET http://localhost:8080/currency-exchange/currency/EUR
+Accept: application/json
+
+### Get currency by code - 400 Bad Request
+GET http://localhost:8080/currency-exchange/currency/EEE
+Accept: application/json
+
+### Get currency by code - 400 Bad Request
+GET http://localhost:8080/currency-exchange/currency/USDT
+Accept: application/json
+
+### Get currency by code - 400 Bad Request
+GET http://localhost:8080/currency-exchange/currency/
+Accept: application/json
+
+### Get currency by code - 500 Internal server error!
+GET http://localhost:8080/currency-exchange/currency
+Accept: application/json
+
+### Get currency by code - 404 Not Found
+GET http://localhost:8080/currency-exchange/currency/RUB
+Accept: application/json
+
+### Add new currency - 201 Created
+POST http://localhost:8080/currency-exchange/currencies
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+name=Russian Ruble &
+code=RUB &
+sign=₽
+
+### Add new incorrect currency - 400 Bad Request
+POST http://localhost:8080/currency-exchange/currencies
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+name=Russian Ruble &
+code= &
+sign=₽
+
+### Add same currency - 409 Conflict
+POST http://localhost:8080/currency-exchange/currencies
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+name=US Dollar &
+code=USD&
+sign=$
+
+### Add new incorrect currency - 400 Bad Request
+POST http://localhost:8080/currency-exchange/currencies
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+name=&
+code=ABC&
+sign=₽

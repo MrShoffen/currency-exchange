@@ -1,0 +1,98 @@
+### Get all exchange rates - 200 OK
+GET http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+
+### Get exchange rate - 200 OK
+GET http://localhost:8080/currency-exchange/exchangeRate/USDEUR
+Accept: application/json
+
+### Get exchange rate - 400 Bad Request
+GET http://localhost:8080/currency-exchange/exchangeRate/ANAFEA
+Accept: application/json
+
+### Get exchange rate - 400 Bad Request
+GET http://localhost:8080/currency-exchange/exchangeRate/
+Accept: application/json
+
+### Get exchange rate - 404 Not Found
+GET http://localhost:8080/currency-exchange/exchangeRate/EURRUB
+Accept: application/json
+
+
+
+### Add new exchange rate - 201 Created
+POST http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=GBP&
+targetCurrencyCode=EUR&
+rate=1.12
+
+### Add new exchange rate - 400 Bad Request
+POST http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=USD &
+targetCurrencyCode=sdf32 &
+rate=23
+
+### Add new exchange rate - 409 Conflict
+POST http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=USD &
+targetCurrencyCode=EUR &
+rate=0.5
+
+### Add new exchange rate - 404 Not Found
+POST http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=SEK &
+targetCurrencyCode=EUR &
+rate=1.17
+
+### Add new exchange rate - 400 Bad Request
+POST http://localhost:8080/currency-exchange/exchangeRates
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=EUR &
+targetCurrencyCode=EUR &
+rate=1
+
+
+
+### Patch exchange rate - 200 Ok
+PATCH http://localhost:8080/currency-exchange/exchangeRate/USDEUR
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+rate=1.2753551
+
+### Patch exchange rate - 400 Bad Request
+### Invalid or missing rate parameter
+PATCH http://localhost:8080/currency-exchange/exchangeRate/USDEUR
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+rate=miss
+
+### Patch exchange rate - 404 Not Found
+### Exchange rate for currencies is not present in the database
+PATCH http://localhost:8080/currency-exchange/exchangeRate/PLNEUR
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+rate=1.5
+
+### Patch exchange rate - 400 Bad Request
+PATCH http://localhost:8080/currency-exchange/exchangeRate/EURUSD
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+rate=1.1

@@ -1,0 +1,23 @@
+### Exchange - 200 Ok
+### Direct
+GET http://localhost:8080/currency-exchange/exchange?from=USD&to=EUR&amount=100
+Accept: application/json
+
+### Exchange - 200 Ok
+### Reverse
+GET http://localhost:8080/currency-exchange/exchange?from=GBP&to=USD&amount=100
+Accept: application/json
+
+### Exchange - 200 Ok
+### Cross
+GET http://localhost:8080/currency-exchange/exchange?from=EUR&to=GBP&amount=100
+Accept: application/json
+
+### Exchange - 400 Bad Request
+GET http://localhost:8080/currency-exchange/exchange?from=incorrect&to=EUR&amount=100
+Accept: application/json
+
+### Exchange - 404 Not Found
+GET http://localhost:8080/currency-exchange/exchange?from=USD&to=RUB&amount=100
+Accept: application/json
+
