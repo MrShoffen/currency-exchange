@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.HibernateValidator;
 import org.mrshoffen.exchange.dao.CurrencyDao;
 import org.mrshoffen.exchange.dao.CurrencyDaoImpl;
+import org.mrshoffen.exchange.dao.ExchangeRateDao;
+import org.mrshoffen.exchange.dao.ExchangeRateDaoImpl;
 import org.mrshoffen.exchange.service.CurrencyService;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -28,6 +30,8 @@ public class DependencyManager extends AbstractModule {
 //        bind(CurrencyDao.class).to(CurrencyDaoImpl.class);
 //        bind(ExchangeRateDao.class).to(ExchangeRateDaoImpl.class);
         bind(CurrencyDao.class).to(CurrencyDaoImpl.class);
+        bind(ExchangeRateDao.class).to(ExchangeRateDaoImpl.class);
+
         bind(Validator.class).toInstance(configureValidator());
 
 

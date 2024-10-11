@@ -1,40 +1,38 @@
 package org.mrshoffen.exchange.service;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.mrshoffen.exchange.dao.ExchangeRateDao;
-import org.mrshoffen.exchange.dao.ExchangeRateDaoImpl;
 import org.mrshoffen.exchange.dto.request.ExchangeRequestDto;
 import org.mrshoffen.exchange.dto.response.ExchangeResponseDto;
 import org.mrshoffen.exchange.entity.ExchangeRate;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.utils.MappingUtil;
-import org.mrshoffen.exchange.utils.validator.DtoValidationUtil;
-import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
+import java.util.Set;
 
 import static java.math.MathContext.DECIMAL64;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExchangeService {
-    private static final ExchangeService INSTANCE = new ExchangeService();
 
-    private final ExchangeRateDao exchangeRateDao = ExchangeRateDaoImpl.getInstance();
+    @Inject
+    private ExchangeRateDao exchangeRateDao;
 
+    @Inject
+    private Validator validator;
 
-    public static ExchangeService getInstance() {
-        return INSTANCE;
-    }
 
     public ExchangeResponseDto exchange(ExchangeRequestDto requestDto) {
-        ValResult validationResult = DtoValidationUtil.validate(requestDto);
 
-        if (validationResult.isNotValid()) {
-            throw new ValidationException(validationResult.allValidatingErrors());
+        Set<ConstraintViolation<ExchangeRequestDto>> validationErrors = validator.validate(requestDto);
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
         }
 
         ExchangeRate exchangeRate = findExchangeRate(requestDto.getBaseCurrencyCode(), requestDto.getTargetCurrencyCode())

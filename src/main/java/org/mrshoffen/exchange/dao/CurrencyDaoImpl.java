@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @NoArgsConstructor
 public class CurrencyDaoImpl implements CurrencyDao {
-    private static final CurrencyDao INSTANCE = new CurrencyDaoImpl();
 
     private static final String FIND_ALL_SQL = "SELECT id, code, full_name, sign FROM currencies";
     private static final String FIND_BY_CODE_SQL = FIND_ALL_SQL + " WHERE code = ?";
@@ -25,9 +24,6 @@ public class CurrencyDaoImpl implements CurrencyDao {
                                                     " VALUES (?, ?, ?)" +
                                                     "RETURNING id, code, full_name, sign";
 
-    public static CurrencyDao getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     public List<Currency> findAll() {

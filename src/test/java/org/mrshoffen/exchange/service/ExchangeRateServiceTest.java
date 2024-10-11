@@ -10,6 +10,7 @@ import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
+import org.mrshoffen.exchange.utils.DependencyManager;
 import org.mrshoffen.exchange.utils.MappingUtil;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExchangeRateServiceTest {
-    ExchangeRateService exchangeRateService = ExchangeRateService.getInstance();
+    ExchangeRateService exchangeRateService = DependencyManager.getInjector().getInstance(ExchangeRateService.class);
 
     private static Currency USD_currency_in_table;
     private static Currency EUR_currency_in_table;

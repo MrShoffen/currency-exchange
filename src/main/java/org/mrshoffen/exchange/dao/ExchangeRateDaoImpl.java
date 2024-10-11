@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class ExchangeRateDaoImpl implements ExchangeRateDao {
-    private static final ExchangeRateDao INSTANCE = new ExchangeRateDaoImpl();
 
     private static final String FIND_ALL_SQL = """
                                                SELECT ex_rate.id         id,
@@ -45,11 +44,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     private static final String UPDATE_EXCHANGE_RATE_SQL = "UPDATE exchange_rates SET rate = ?" +
                                                            " WHERE base_currency_id = ? AND target_currency_id = ?" +
                                                            "RETURNING id";
-
-
-    public static ExchangeRateDao getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     public List<ExchangeRate> findAll() {

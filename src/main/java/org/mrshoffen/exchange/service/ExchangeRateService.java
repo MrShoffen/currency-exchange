@@ -1,11 +1,10 @@
 package org.mrshoffen.exchange.service;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.mrshoffen.exchange.dao.CurrencyDao;
-import org.mrshoffen.exchange.dao.CurrencyDaoImpl;
 import org.mrshoffen.exchange.dao.ExchangeRateDao;
-import org.mrshoffen.exchange.dao.ExchangeRateDaoImpl;
 import org.mrshoffen.exchange.dto.request.ExchangeRateRequestDto;
 import org.mrshoffen.exchange.dto.response.ExchangeRateResponseDto;
 import org.mrshoffen.exchange.entity.Currency;
@@ -14,25 +13,25 @@ import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.utils.MappingUtil;
-import org.mrshoffen.exchange.utils.validator.DtoValidationUtil;
-import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExchangeRateService {
-    private static final ExchangeRateService INSTANCE = new ExchangeRateService();
 
-    private final ExchangeRateDao exchangeRateDao = ExchangeRateDaoImpl.getInstance();
-    private final CurrencyDao currencyDao = CurrencyDaoImpl.getInstance();
+    @Inject
+    private ExchangeRateDao exchangeRateDao;
 
+    @Inject
+    private CurrencyDao currencyDao;
 
-    public static ExchangeRateService getInstance() {
-        return INSTANCE;
-    }
+    @Inject
+    private Validator validator;
+
 
     public List<ExchangeRateResponseDto> findAll() {
         List<ExchangeRate> allExchangeRates = exchangeRateDao.findAll();
@@ -41,10 +40,13 @@ public class ExchangeRateService {
     }
 
     public ExchangeRateResponseDto findByCodes(ExchangeRateRequestDto requestDto) {
+        Set<ConstraintViolation<ExchangeRateRequestDto>> baseCurrencyErr = validator.validateProperty(requestDto, "baseCurrency");
+        Set<ConstraintViolation<ExchangeRateRequestDto>> targetCurrencyErr = validator.validateProperty(requestDto, "targetCurrency");
 
-        ValResult result = DtoValidationUtil.validateBothCodes(requestDto.getBaseCurrency(),requestDto.getTargetCurrency());
-        if (result.isNotValid()) {
-            throw new ValidationException(result.allValidatingErrors());
+        Set<ConstraintViolation<ExchangeRateRequestDto>> validationResult = new HashSet<>(baseCurrencyErr);
+        validationResult.addAll(targetCurrencyErr);
+        if (!validationResult.isEmpty()) {
+            throw new ValidationException(baseCurrencyErr);
         }
 
         Optional<ExchangeRateResponseDto> exchangeRateResponseDto = exchangeRateDao
@@ -61,9 +63,10 @@ public class ExchangeRateService {
 
     public ExchangeRateResponseDto save(ExchangeRateRequestDto requestDto) {
 
-        ValResult validationResult = DtoValidationUtil.validate(requestDto);
-        if (validationResult.isNotValid()) {
-            throw new ValidationException(validationResult.allValidatingErrors());
+        Set<ConstraintViolation<ExchangeRateRequestDto>> validationErrors = validator.validate(requestDto);
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
         }
 
         ExchangeRate rateForSave = extractFullExchangeRate(requestDto);
@@ -80,10 +83,11 @@ public class ExchangeRateService {
     }
 
     public ExchangeRateResponseDto update(ExchangeRateRequestDto requestDto) {
-        ValResult validationResult = DtoValidationUtil.validate(requestDto);
 
-        if (validationResult.isNotValid()) {
-            throw new ValidationException(validationResult.allValidatingErrors());
+        Set<ConstraintViolation<ExchangeRateRequestDto>> validationErrors = validator.validate(requestDto);
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
         }
 
         ExchangeRate rateForUpdate = extractFullExchangeRate(requestDto);

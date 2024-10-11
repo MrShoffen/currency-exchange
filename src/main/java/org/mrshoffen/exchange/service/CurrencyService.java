@@ -2,6 +2,8 @@ package org.mrshoffen.exchange.service;
 
 
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mrshoffen.exchange.dao.CurrencyDao;
@@ -18,18 +20,16 @@ import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor
 public class CurrencyService {
 
     @Inject
     private CurrencyDao currencyDao;
 
-//    @Inject
-//    public CurrencyService(CurrencyDao currencyDao) {
-//        this.currencyDao = currencyDao;
-//    }
+    @Inject
+    private Validator validator;
 
 
     public List<CurrencyResponseDto> findAll() {
@@ -40,9 +40,10 @@ public class CurrencyService {
 
     public CurrencyResponseDto findByCode(CurrencyRequestDto requestDto) {
 
-        ValResult result = DtoValidationUtil.validateCurrencyCode(requestDto.getCode());
-        if (result.isNotValid()) {
-            throw new ValidationException(result.allValidatingErrors());
+        Set<ConstraintViolation<CurrencyRequestDto>> validationErrors = validator.validateProperty(requestDto, "code");
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
         }
 
         Optional<CurrencyResponseDto> currencyResponseDto = currencyDao.findByCode(requestDto.getCode())
@@ -58,9 +59,10 @@ public class CurrencyService {
 
     public CurrencyResponseDto saveCurrency(CurrencyRequestDto requestDto) {
 
-        ValResult result = DtoValidationUtil.validate(requestDto);
-        if (result.isNotValid()) {
-            throw new ValidationException(result.allValidatingErrors());
+        Set<ConstraintViolation<CurrencyRequestDto>> validationErrors = validator.validate(requestDto);
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
         }
 
         Currency currencyForSave = MappingUtil.mapDtoToEntity(requestDto);

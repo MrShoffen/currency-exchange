@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mrshoffen.exchange.entity.Currency;
 import org.mrshoffen.exchange.entity.ExchangeRate;
+import org.mrshoffen.exchange.service.CurrencyService;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
+import org.mrshoffen.exchange.utils.DependencyManager;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExchangeRateDaoTest {
-    private static final ExchangeRateDao exchangeDao = ExchangeRateDaoImpl.getInstance();
-    private static final CurrencyDao currencyDao = CurrencyDaoImpl.getInstance();
+    private static final ExchangeRateDao exchangeDao = DependencyManager.getInjector().getInstance(ExchangeRateDao.class);;
+    private static final CurrencyDao currencyDao = DependencyManager.getInjector().getInstance(CurrencyDao.class);;
 
     private static ExchangeRate USD_EUR_exchange_rate_in_table;
     private static Currency USD_currency_in_table;

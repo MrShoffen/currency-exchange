@@ -9,13 +9,14 @@ import org.mrshoffen.exchange.dto.response.ExchangeResponseDto;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
+import org.mrshoffen.exchange.utils.DependencyManager;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExchangeServiceTest {
-    ExchangeService exchangeService = ExchangeService.getInstance();
+    ExchangeService exchangeService = DependencyManager.getInjector().getInstance(ExchangeService.class);
 
     private static final CurrencyResponseDto USD = CurrencyResponseDto.builder()
             .id(1).code("USD").name("US Dollar").sign("$").build();

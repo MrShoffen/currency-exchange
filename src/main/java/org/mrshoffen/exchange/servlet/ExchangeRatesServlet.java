@@ -1,5 +1,8 @@
 package org.mrshoffen.exchange.servlet;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +17,16 @@ import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 
 @WebServlet(value = "/exchangeRates", name = "ExchangeRates")
 public class ExchangeRatesServlet extends AbstractBaseHttpServlet {
-    ExchangeRateService exchangeRateService = ExchangeRateService.getInstance();
+
+    @Inject
+    private ExchangeRateService exchangeRateService;
+
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        exchangeRateService = injector.getInstance(ExchangeRateService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

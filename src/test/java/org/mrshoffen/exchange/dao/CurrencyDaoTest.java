@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mrshoffen.exchange.entity.Currency;
 import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
+import org.mrshoffen.exchange.service.CurrencyService;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
+import org.mrshoffen.exchange.utils.DependencyManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CurrencyDaoTest {
-    private static final CurrencyDao currencyDao = CurrencyDaoImpl.getInstance();
+    private static final CurrencyDao currencyDao = DependencyManager.getInjector().getInstance(CurrencyDao.class);
 
     private static Currency USD_currency_in_table;
     private static Currency RUB_currency_not_in_table;
