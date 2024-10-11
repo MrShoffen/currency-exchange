@@ -13,7 +13,7 @@ import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.utils.MappingUtil;
 import org.mrshoffen.exchange.utils.validator.DtoValidationUtil;
-import org.mrshoffen.exchange.utils.validator.ValidationResult;
+import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class CurrencyService {
 
     public CurrencyResponseDto findByCode(CurrencyRequestDto requestDto) {
 
-        ValidationResult result = DtoValidationUtil.validateCurrencyCode(requestDto.getCode());
+        ValResult result = DtoValidationUtil.validateCurrencyCode(requestDto.getCode());
         if (result.isNotValid()) {
             throw new ValidationException(result.allValidatingErrors());
         }
@@ -56,7 +56,7 @@ public class CurrencyService {
 
     public CurrencyResponseDto saveCurrency(CurrencyRequestDto requestDto) {
 
-        ValidationResult result = DtoValidationUtil.validate(requestDto);
+        ValResult result = DtoValidationUtil.validate(requestDto);
         if (result.isNotValid()) {
             throw new ValidationException(result.allValidatingErrors());
         }

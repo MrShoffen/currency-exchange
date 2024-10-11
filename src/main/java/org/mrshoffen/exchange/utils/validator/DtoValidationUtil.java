@@ -16,74 +16,74 @@ public class DtoValidationUtil {
             .map(Currency::getCurrencyCode)
             .collect(Collectors.toSet());
 
-    public static ValidationResult validate(CurrencyRequestDto dto) {
-        return ValidationResult.createEmpty()
+    public static ValResult validate(CurrencyRequestDto dto) {
+        return ValResult.createEmpty()
                 .and(validateCurrencyCode(dto.getCode()))
                 .and(validateCurrencyName(dto.getName()))
                 .and(validateCurrencySign(dto.getSign()));
     }
 
-    public static ValidationResult validate(ExchangeRequestDto dto) {
-        return ValidationResult.createEmpty()
+    public static ValResult validate(ExchangeRequestDto dto) {
+        return ValResult.createEmpty()
                 .and(validateBothCodes(dto.getBaseCurrencyCode(), dto.getTargetCurrencyCode()))
                 .and(validateAmount(dto.getAmount()));
     }
 
-    public static ValidationResult validate(ExchangeRateRequestDto dto) {
-        return ValidationResult.createEmpty()
+    public static ValResult validate(ExchangeRateRequestDto dto) {
+        return ValResult.createEmpty()
                 .and(validateBothCodes(dto.getBaseCurrency(), dto.getTargetCurrency()))
                 .and(validateRate(dto.getRate()));
     }
 
-    public static ValidationResult validateCurrencyCode(String code) {
+    public static ValResult validateCurrencyCode(String code) {
         if (code == null || code.length() != 3 || code.isBlank()) {
-            return ValidationResult.of("Currency code must contain 3 symbols!");
+            return ValResult.of("Currency code must contain 3 symbols!");
         }
 
         if (!ALL_CURRENCIES_CODES.contains(code)) {
-            return ValidationResult.of("No such currency " + code + " in ISO 4217 codes!");
+            return ValResult.of("No such currency " + code + " in ISO 4217 codes!");
         }
-        return ValidationResult.createEmpty();
+        return ValResult.createEmpty();
     }
 
-    public static ValidationResult validateBothCodes(String baseCurrencyCode, String targetCurrencyCode) {
-        return ValidationResult.createEmpty()
+    public static ValResult validateBothCodes(String baseCurrencyCode, String targetCurrencyCode) {
+        return ValResult.createEmpty()
                 .and(validateSameCurrencies(baseCurrencyCode, targetCurrencyCode))
                 .and(validateCurrencyCode(baseCurrencyCode))
                 .and(validateCurrencyCode(targetCurrencyCode));
     }
 
-    private static ValidationResult validateSameCurrencies(String baseCurrencyCode, String targetCurrencyCode) {
-        return baseCurrencyCode.equals(targetCurrencyCode) ? ValidationResult.of("Both currencies are the same")
-                : ValidationResult.createEmpty();
+    private static ValResult validateSameCurrencies(String baseCurrencyCode, String targetCurrencyCode) {
+        return baseCurrencyCode.equals(targetCurrencyCode) ? ValResult.of("Both currencies are the same")
+                : ValResult.createEmpty();
     }
 
 
-    private static ValidationResult validateCurrencySign(String sign) {
-        return sign == null || sign.isBlank() ? ValidationResult.of("Currency sign is empty!") : ValidationResult.createEmpty();
+    private static ValResult validateCurrencySign(String sign) {
+        return sign == null || sign.isBlank() ? ValResult.of("Currency sign is empty!") : ValResult.createEmpty();
     }
 
-    private static ValidationResult validateCurrencyName(String name) {
-        return name == null || name.isBlank() ? ValidationResult.of("Currency name is empty!") : ValidationResult.createEmpty();
+    private static ValResult validateCurrencyName(String name) {
+        return name == null || name.isBlank() ? ValResult.of("Currency name is empty!") : ValResult.createEmpty();
     }
 
-    private static ValidationResult validateRate(String s) {
+    private static ValResult validateRate(String s) {
         try {
             BigDecimal value = new BigDecimal(s);
-            return value.compareTo(BigDecimal.ZERO) > 0 ? ValidationResult.createEmpty() :
-                    ValidationResult.of("Rate must be positive");
+            return value.compareTo(BigDecimal.ZERO) > 0 ? ValResult.createEmpty() :
+                    ValResult.of("Rate must be positive");
         } catch (Exception e) {
-            return ValidationResult.of("Incorrect rate format!");
+            return ValResult.of("Incorrect rate format!");
         }
     }
 
-    private static ValidationResult validateAmount(String s) {
+    private static ValResult validateAmount(String s) {
         try {
             BigDecimal value = new BigDecimal(s);
-            return value.compareTo(BigDecimal.ZERO) > 0 ? ValidationResult.createEmpty() :
-                    ValidationResult.of("Amount must be positive");
+            return value.compareTo(BigDecimal.ZERO) > 0 ? ValResult.createEmpty() :
+                    ValResult.of("Amount must be positive");
         } catch (Exception e) {
-            return ValidationResult.of("Incorrect amount format!");
+            return ValResult.of("Incorrect amount format!");
         }
     }
 

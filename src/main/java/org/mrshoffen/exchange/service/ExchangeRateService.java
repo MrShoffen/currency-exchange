@@ -15,7 +15,7 @@ import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.utils.MappingUtil;
 import org.mrshoffen.exchange.utils.validator.DtoValidationUtil;
-import org.mrshoffen.exchange.utils.validator.ValidationResult;
+import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ExchangeRateService {
 
     public ExchangeRateResponseDto findByCodes(ExchangeRateRequestDto requestDto) {
 
-        ValidationResult result = DtoValidationUtil.validateBothCodes(requestDto.getBaseCurrency(),requestDto.getTargetCurrency());
+        ValResult result = DtoValidationUtil.validateBothCodes(requestDto.getBaseCurrency(),requestDto.getTargetCurrency());
         if (result.isNotValid()) {
             throw new ValidationException(result.allValidatingErrors());
         }
@@ -61,7 +61,7 @@ public class ExchangeRateService {
 
     public ExchangeRateResponseDto save(ExchangeRateRequestDto requestDto) {
 
-        ValidationResult validationResult = DtoValidationUtil.validate(requestDto);
+        ValResult validationResult = DtoValidationUtil.validate(requestDto);
         if (validationResult.isNotValid()) {
             throw new ValidationException(validationResult.allValidatingErrors());
         }
@@ -80,7 +80,7 @@ public class ExchangeRateService {
     }
 
     public ExchangeRateResponseDto update(ExchangeRateRequestDto requestDto) {
-        ValidationResult validationResult = DtoValidationUtil.validate(requestDto);
+        ValResult validationResult = DtoValidationUtil.validate(requestDto);
 
         if (validationResult.isNotValid()) {
             throw new ValidationException(validationResult.allValidatingErrors());

@@ -11,7 +11,7 @@ import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
 import org.mrshoffen.exchange.utils.MappingUtil;
 import org.mrshoffen.exchange.utils.validator.DtoValidationUtil;
-import org.mrshoffen.exchange.utils.validator.ValidationResult;
+import org.mrshoffen.exchange.utils.validator.ValResult;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,7 +31,7 @@ public class ExchangeService {
     }
 
     public ExchangeResponseDto exchange(ExchangeRequestDto requestDto) {
-        ValidationResult validationResult = DtoValidationUtil.validate(requestDto);
+        ValResult validationResult = DtoValidationUtil.validate(requestDto);
 
         if (validationResult.isNotValid()) {
             throw new ValidationException(validationResult.allValidatingErrors());

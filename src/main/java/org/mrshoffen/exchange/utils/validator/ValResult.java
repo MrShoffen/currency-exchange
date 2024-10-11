@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ValidationResult {
+public class ValResult {
 
     private final List<String> validationErrors = new ArrayList<>();
 
-    public static ValidationResult createEmpty() {
-        return new ValidationResult();
+    public static ValResult createEmpty() {
+        return new ValResult();
     }
 
-    public static ValidationResult of(String error) {
-        ValidationResult vr = new ValidationResult();
+    public static ValResult of(String error) {
+        ValResult vr = new ValResult();
         vr.validationErrors.add(error);
         return vr;
     }
 
-    public ValidationResult and(ValidationResult another) {
+    public ValResult and(ValResult another) {
         validationErrors.addAll(another.validationErrors);
         return this;
     }
