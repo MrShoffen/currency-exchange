@@ -43,3 +43,5 @@ Linux/MacOS: TOMCAT_HOME/bin/startup.sh
 4) Проект запустится и будет доступен по ссылке:
 
 http://localhost:8080/currency-exchange/
+
+5) В папке http_request_tests в корне репозитория лежат запросы для проверки REST API  через InteliJ IDEA HTTP Client 

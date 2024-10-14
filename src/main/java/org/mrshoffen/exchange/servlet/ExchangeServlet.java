@@ -1,13 +1,11 @@
 package org.mrshoffen.exchange.servlet;
 
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.exchange.dto.request.ExchangeRequestDto;
 import org.mrshoffen.exchange.dto.response.ExchangeResponseDto;
-import org.mrshoffen.exchange.service.ExchangeRateService;
 import org.mrshoffen.exchange.service.ExchangeService;
 
 import java.io.IOException;
@@ -15,6 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/exchange", name = "Exchange")
 public class ExchangeServlet extends AbstractBaseHttpServlet {
 
+    @Inject
     private ExchangeService exchangeService;
 
 
