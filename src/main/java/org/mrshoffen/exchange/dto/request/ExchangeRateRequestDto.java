@@ -32,22 +32,4 @@ public class ExchangeRateRequestDto {
     @ValidNumberFormat(message = "Incorrect rate format!")
     String rate;
 
-    public static void main(String[] args) {
-
-        Validator validator = Validation.byProvider(HibernateValidator.class)
-                .configure()
-                .buildValidatorFactory().getValidator();
-
-        ExchangeRateRequestDto exR = ExchangeRateRequestDto.builder()
-                .targetCurrency("USD")
-                .baseCurrency("USD")
-                .rate("-12")
-                .build();
-
-        Set<ConstraintViolation<ExchangeRateRequestDto>> validate = validator.validate(exR);
-
-        for (ConstraintViolation<ExchangeRateRequestDto> er : validate) {
-            System.out.println(er.getMessage());
-        }
-    }
 }

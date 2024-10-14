@@ -27,7 +27,4 @@ public class CurrencyRequestDto {
     @NotBlank(message = "Currency sign is empty!")
     String sign;
 
-    public static void main(String[] args) {
-
-    }
 }

@@ -31,8 +31,7 @@ public class DependencyManager extends AbstractModule {
 
     @Override
     protected void configure() {
-//        bind(CurrencyDao.class).to(CurrencyDaoImpl.class);
-//        bind(ExchangeRateDao.class).to(ExchangeRateDaoImpl.class);
+
         bind(CurrencyDao.class).to(CurrencyDaoImpl.class);
         bind(ExchangeRateDao.class).to(ExchangeRateDaoImpl.class);
 

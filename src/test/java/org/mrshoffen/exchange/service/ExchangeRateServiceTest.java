@@ -9,9 +9,10 @@ import org.mrshoffen.exchange.entity.Currency;
 import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
+import org.mrshoffen.exchange.mapper.CurrencyMapper;
+import org.mrshoffen.exchange.mapper.CurrencyMapperImpl;
 import org.mrshoffen.exchange.testutils.DatabaseManipulation;
 import org.mrshoffen.exchange.utils.DependencyManager;
-import org.mrshoffen.exchange.utils.MappingUtil;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExchangeRateServiceTest {
     ExchangeRateService exchangeRateService = DependencyManager.getInjector().getInstance(ExchangeRateService.class);
+    CurrencyMapper currencyMapper = DependencyManager.getInjector().getInstance(CurrencyMapper.class);
 
     private static Currency USD_currency_in_table;
     private static Currency EUR_currency_in_table;
@@ -61,8 +63,8 @@ class ExchangeRateServiceTest {
                 .build();
         USD_EUR_expected_response = ExchangeRateResponseDto.builder()
                 .id(1)
-                .baseCurrency(MappingUtil.mapEntityToDto(USD_currency_in_table))
-                .targetCurrency(MappingUtil.mapEntityToDto(EUR_currency_in_table))
+                .baseCurrency(currencyMapper.toDto(USD_currency_in_table))
+                .targetCurrency(currencyMapper.toDto(EUR_currency_in_table))
                 .rate(BigDecimal.valueOf(0.9))
                 .build();
 
@@ -78,8 +80,8 @@ class ExchangeRateServiceTest {
                 .build();
         USD_CNY_expected_after_save = ExchangeRateResponseDto.builder()
                 .id(4)
-                .baseCurrency(MappingUtil.mapEntityToDto(USD_currency_in_table))
-                .targetCurrency(MappingUtil.mapEntityToDto(CNY_currency_in_table_without_exRate))
+                .baseCurrency(currencyMapper.toDto(USD_currency_in_table))
+                .targetCurrency(currencyMapper.toDto(CNY_currency_in_table_without_exRate))
                 .rate(BigDecimal.valueOf(1.2))
                 .build();
 
@@ -95,8 +97,8 @@ class ExchangeRateServiceTest {
 
         USD_EUR_after_update_response = ExchangeRateResponseDto.builder()
                 .id(1)
-                .baseCurrency(MappingUtil.mapEntityToDto(USD_currency_in_table))
-                .targetCurrency(MappingUtil.mapEntityToDto(EUR_currency_in_table))
+                .baseCurrency(currencyMapper.toDto(USD_currency_in_table))
+                .targetCurrency(currencyMapper.toDto(EUR_currency_in_table))
                 .rate(BigDecimal.valueOf(0.5))
                 .build();
     }

@@ -10,6 +10,7 @@ java {
 
 war {
     archiveFileName = "currency-exchange.war"
+
 }
 
 
@@ -17,6 +18,7 @@ repositories {
     mavenCentral()
 
 }
+
 
 dependencies {
     //lombok
@@ -28,7 +30,7 @@ dependencies {
     implementation 'org.glassfish.expressly:expressly:5.0.0'
 
     //DI
-    implementation 'com.google.inject:guice:7.0.0'
+    implementation 'com.google.inject:guice:6.0.0'
 //    testImplementation 'com.google.inject:guice:7.0.0'
 
     //mapStruct
