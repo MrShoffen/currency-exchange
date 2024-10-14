@@ -18,7 +18,6 @@ import org.mrshoffen.exchange.dao.ExchangeRateDaoImpl;
 import org.mrshoffen.exchange.mapper.CurrencyMapper;
 import org.mrshoffen.exchange.mapper.ExchangeMapper;
 import org.mrshoffen.exchange.mapper.ExchangeRateMapper;
-import org.mrshoffen.exchange.service.CurrencyService;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DependencyManager extends AbstractModule {
@@ -35,16 +34,14 @@ public class DependencyManager extends AbstractModule {
         bind(CurrencyDao.class).to(CurrencyDaoImpl.class);
         bind(ExchangeRateDao.class).to(ExchangeRateDaoImpl.class);
 
-        bind(Validator.class).toInstance(configureValidator());
+        bind(Validator.class).toInstance(hibernateValidatorInstance());
 
         bind(CurrencyMapper.class).toInstance(Mappers.getMapper(CurrencyMapper.class));
         bind(ExchangeRateMapper.class).toInstance(Mappers.getMapper(ExchangeRateMapper.class));
         bind(ExchangeMapper.class).toInstance(Mappers.getMapper(ExchangeMapper.class));
-
-
     }
 
-    private Validator configureValidator() {
+    private Validator hibernateValidatorInstance() {
         return Validation.byProvider(HibernateValidator.class)
                 .configure()
                 .buildValidatorFactory().getValidator();

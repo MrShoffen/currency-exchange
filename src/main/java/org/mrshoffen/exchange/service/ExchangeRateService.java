@@ -46,10 +46,10 @@ public class ExchangeRateService {
         Set<ConstraintViolation<ExchangeRateRequestDto>> baseCurrencyErr = validator.validateProperty(requestDto, "baseCurrency");
         Set<ConstraintViolation<ExchangeRateRequestDto>> targetCurrencyErr = validator.validateProperty(requestDto, "targetCurrency");
 
-        Set<ConstraintViolation<ExchangeRateRequestDto>> validationResult = new HashSet<>(baseCurrencyErr);
-        validationResult.addAll(targetCurrencyErr);
-        if (!validationResult.isEmpty()) {
-            throw new ValidationException(baseCurrencyErr);
+        Set<ConstraintViolation<ExchangeRateRequestDto>> allValidatingErrors = new HashSet<>(baseCurrencyErr);
+        allValidatingErrors.addAll(targetCurrencyErr);
+        if (!allValidatingErrors.isEmpty()) {
+            throw new ValidationException(allValidatingErrors);
         }
 
         Optional<ExchangeRateResponseDto> exchangeRateResponseDto = exchangeRateDao
