@@ -9,7 +9,7 @@ import org.mrshoffen.exchange.dto.response.ExchangeResponseDto;
 import org.mrshoffen.exchange.entity.ExchangeRate;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
-import org.mrshoffen.exchange.utils.MappingUtil;
+import org.mrshoffen.exchange.mapper.ExchangeMapper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,6 +25,9 @@ public class ExchangeService {
 
     @Inject
     private Validator validator;
+
+    @Inject
+    private ExchangeMapper exchangeMapper;
 
 
     public ExchangeResponseDto exchange(ExchangeRequestDto requestDto) {
@@ -46,13 +49,7 @@ public class ExchangeService {
         BigDecimal convertedAmount = amount.multiply(exchangeRate.getRate())
                 .setScale(2, RoundingMode.HALF_EVEN);
 
-        return ExchangeResponseDto.builder()
-                .baseCurrency(MappingUtil.mapEntityToDto(exchangeRate.getBaseCurrency()))
-                .targetCurrency(MappingUtil.mapEntityToDto(exchangeRate.getTargetCurrency()))
-                .amount(amount)
-                .convertedAmount(convertedAmount)
-                .rate(exchangeRate.getRate())
-                .build();
+        return exchangeMapper.toDto(exchangeRate,amount,convertedAmount);
     }
 
     private Optional<ExchangeRate> findExchangeRate(String baseC, String targetC) {

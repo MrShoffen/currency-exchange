@@ -12,7 +12,7 @@ import org.mrshoffen.exchange.entity.ExchangeRate;
 import org.mrshoffen.exchange.exception.EntityAlreadyExistsException;
 import org.mrshoffen.exchange.exception.EntityNotFoundException;
 import org.mrshoffen.exchange.exception.ValidationException;
-import org.mrshoffen.exchange.utils.MappingUtil;
+import org.mrshoffen.exchange.mapper.ExchangeRateMapper;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -32,11 +32,14 @@ public class ExchangeRateService {
     @Inject
     private Validator validator;
 
+    @Inject
+    private ExchangeRateMapper exchangeRateMapper;
+
 
     public List<ExchangeRateResponseDto> findAll() {
         List<ExchangeRate> allExchangeRates = exchangeRateDao.findAll();
 
-        return allExchangeRates.stream().map(MappingUtil::mapEntityToDto).collect(Collectors.toList());
+        return allExchangeRates.stream().map(exchangeRateMapper::toDto).collect(Collectors.toList());
     }
 
     public ExchangeRateResponseDto findByCodes(ExchangeRateRequestDto requestDto) {
@@ -51,7 +54,7 @@ public class ExchangeRateService {
 
         Optional<ExchangeRateResponseDto> exchangeRateResponseDto = exchangeRateDao
                 .findByCodes(requestDto.getBaseCurrency(), requestDto.getTargetCurrency())
-                .map(MappingUtil::mapEntityToDto);
+                .map(exchangeRateMapper::toDto);
 
         return exchangeRateResponseDto
                 .orElseThrow(
@@ -72,7 +75,7 @@ public class ExchangeRateService {
         ExchangeRate rateForSave = extractFullExchangeRate(requestDto);
 
         Optional<ExchangeRateResponseDto> exchangeRateAfterSave = exchangeRateDao.save(rateForSave)
-                .map(MappingUtil::mapEntityToDto);
+                .map(exchangeRateMapper::toDto);
 
         return exchangeRateAfterSave
                 .orElseThrow(
@@ -93,7 +96,7 @@ public class ExchangeRateService {
         ExchangeRate rateForUpdate = extractFullExchangeRate(requestDto);
 
         Optional<ExchangeRateResponseDto> exchangeRateAfterUpdate = exchangeRateDao.update(rateForUpdate)
-                .map(MappingUtil::mapEntityToDto);
+                .map(exchangeRateMapper::toDto);
 
         return exchangeRateAfterUpdate
                 .orElseThrow(

@@ -17,11 +17,6 @@ public class ExchangeServlet extends AbstractBaseHttpServlet {
 
     private ExchangeService exchangeService;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        exchangeService = injector.getInstance(ExchangeService.class);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

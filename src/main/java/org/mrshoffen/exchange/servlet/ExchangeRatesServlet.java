@@ -23,12 +23,6 @@ public class ExchangeRatesServlet extends AbstractBaseHttpServlet {
 
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        exchangeRateService = injector.getInstance(ExchangeRateService.class);
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<ExchangeRateResponseDto>  allExchangeRates = exchangeRateService.findAll();
 

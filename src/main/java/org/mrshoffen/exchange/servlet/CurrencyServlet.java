@@ -18,11 +18,6 @@ public class CurrencyServlet extends AbstractBaseHttpServlet {
     @Inject
     private CurrencyService currencyService;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        currencyService = injector.getInstance(CurrencyService.class);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
