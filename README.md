@@ -8,7 +8,6 @@
 - JDBC
 - Java Servlets (Jakarta EE)
 - SQLite
-- JUnit 5
 - Gradle
 - Guice
 - В качестве фронтенда используется: https://github.com/zhukovsd/currency-exchange-frontend
