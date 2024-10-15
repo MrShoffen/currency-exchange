@@ -49,7 +49,7 @@ public class ExchangeService {
         BigDecimal convertedAmount = amount.multiply(exchangeRate.getRate())
                 .setScale(2, RoundingMode.HALF_EVEN);
 
-        return exchangeMapper.toDto(exchangeRate,amount,convertedAmount);
+        return exchangeMapper.toDto(exchangeRate, amount, convertedAmount);
     }
 
     private Optional<ExchangeRate> findExchangeRate(String baseC, String targetC) {

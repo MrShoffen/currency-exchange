@@ -1,8 +1,6 @@
 package org.mrshoffen.exchange.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.inject.Injector;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -11,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.exchange.utils.DependencyManager;
 
 import java.io.IOException;
-import java.sql.Driver;
-import java.sql.DriverManager;
 
 public abstract class AbstractBaseHttpServlet extends HttpServlet {
 

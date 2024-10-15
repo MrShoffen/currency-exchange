@@ -7,7 +7,7 @@ import java.util.Currency;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Iso4217Validator implements ConstraintValidator<ValidIso4217,String> {
+public class Iso4217Validator implements ConstraintValidator<ValidIso4217, String> {
     private static final Set<String> ALL_CURRENCIES_CODES = Currency.getAvailableCurrencies().stream()
             .map(Currency::getCurrencyCode)
             .collect(Collectors.toSet());

@@ -1,6 +1,5 @@
 package org.mrshoffen.exchange.dao;
 
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mrshoffen.exchange.entity.Currency;
 import org.mrshoffen.exchange.exception.DatabaseException;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor
+
 public class CurrencyDaoImpl implements CurrencyDao {
 
     private static final String FIND_ALL_SQL = "SELECT id, code, full_name, sign FROM currencies";

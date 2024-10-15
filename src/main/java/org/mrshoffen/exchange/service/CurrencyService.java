@@ -71,7 +71,7 @@ public class CurrencyService {
                 .orElseThrow(
                         () -> new EntityAlreadyExistsException(
                                 "Error! Currency with code %s or name %s already exists in database."
-                                .formatted(currencyForSave.getCode(), currencyForSave.getFullName()))
+                                        .formatted(currencyForSave.getCode(), currencyForSave.getFullName()))
                 );
 
     }

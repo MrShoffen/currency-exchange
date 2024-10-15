@@ -9,5 +9,4 @@ public class Currency {
     private String code;
     private String fullName;
     private String sign;
-
 }
