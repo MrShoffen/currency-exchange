@@ -10,13 +10,11 @@ java {
 
 war {
     archiveFileName = "currency-exchange.war"
-
 }
 
 
 repositories {
     mavenCentral()
-
 }
 
 
@@ -31,7 +29,7 @@ dependencies {
 
     //DI
     implementation 'com.google.inject:guice:6.0.0'
-//    testImplementation 'com.google.inject:guice:7.0.0'
+    testImplementation 'com.google.inject:guice:7.0.0'
 
     //mapStruct
     implementation 'org.mapstruct:mapstruct:1.6.2'
@@ -43,11 +41,11 @@ dependencies {
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '6.0.0'
 
     //tests
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
-    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.11.1'
 }
 
 test {
     useJUnitPlatform()
 }
+
+compileJava.dependsOn(clean)
