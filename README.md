@@ -7,6 +7,7 @@
 ### Используемые технологии и библиотеки:
 - JDBC, HikariCP
 - Java Servlets (Jakarta EE)
+- JUnit 5
 - SQLite
 - Gradle
 - Guice для DI
