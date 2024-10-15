@@ -8,6 +8,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_22
 }
 
+compileJava.dependsOn(clean)
+
 war {
     archiveFileName = "currency-exchange.war"
 }
@@ -29,7 +31,6 @@ dependencies {
 
     //DI
     implementation 'com.google.inject:guice:6.0.0'
-    testImplementation 'com.google.inject:guice:7.0.0'
 
     //mapStruct
     implementation 'org.mapstruct:mapstruct:1.6.2'
@@ -48,4 +49,3 @@ test {
     useJUnitPlatform()
 }
 
-compileJava.dependsOn(clean)
