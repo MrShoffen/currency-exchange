@@ -5,6 +5,7 @@
 Описание методов REST API и техническое задание представлены по ссылке - https://zhukovsd.github.io/java-backend-learning-course/projects/currency-exchange/
 
 ### Используемые технологии и библиотеки:
+- Java 22
 - JDBC, HikariCP
 - Java Servlets (Jakarta EE)
 - JUnit 5
